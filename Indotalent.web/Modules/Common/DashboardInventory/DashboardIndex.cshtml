@@ -1,0 +1,251 @@
+﻿@model Indotalent.Common.DashboardInventory.DashboardPageModel
+
+@inject Serenity.ITextLocalizer Localizer
+@{
+	ViewData["Title"] = "Dashboard";
+	ViewData["PageId"] = "Dashboard";
+}
+
+@section Head {
+    @Html.StyleBundle("Pages/Dashboard")
+    @Html.ScriptBundle("Pages/Dashboard")
+
+<script type="text/javascript">
+
+
+	$(function () {
+
+	 $(".knob").knob({
+		'format' : function (value) {
+			return value + '%';
+		}
+	});
+
+	  var purchaseChart = new Morris.Line({
+		element: 'purchase-chart',
+		resize: true,
+		data: @(Html.Raw(Json.Serialize(Model.PurchaseGraph))),
+		xkey: 'Month',
+		ykeys: ['Qty'],
+		labels: ['Receipt (Qty)'],
+		lineColors: ['#efefef'],
+		lineWidth: 2,
+		hideHover: 'auto',
+		gridTextColor: "#fff",
+		gridStrokeWidth: 0.4,
+		pointSize: 4,
+		pointStrokeColors: ["#efefef"],
+		gridLineColor: "#efefef",
+		gridTextFamily: "Open Sans",
+		gridTextSize: 10
+	  });
+
+	  var salesChart = new Morris.Line({
+		element: 'sales-chart',
+		resize: true,
+		data: @(Html.Raw(Json.Serialize(Model.SalesGraph))),
+		xkey: 'Month',
+		ykeys: ['Qty'],
+		labels: ['Delivery (Qty)'],
+		lineColors: ['#efefef'],
+		lineWidth: 2,
+		hideHover: 'auto',
+		gridTextColor: "#fff",
+		gridStrokeWidth: 0.4,
+		pointSize: 4,
+		pointStrokeColors: ["#efefef"],
+		gridLineColor: "#efefef",
+		gridTextFamily: "Open Sans",
+		gridTextSize: 10
+	  });
+
+	});
+
+</script>
+}
+
+@section ContentHeader {
+
+}
+
+<div class="row">
+	<div class="col-lg-4">
+		<div class="small-box widget-bg-two">
+			<div class="inner">
+				<h3>@Model.CurrentMonthPurchaseReceipt.Qty</h3>
+				<p>Purchase Receipt (Qty)</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-bag"></i>
+			</div>
+			<a href="~/Inventory/PurchaseReceipt" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="small-box widget-bg-two">
+			<div class="inner">
+				<h3>@Model.CurrentMonthPurchaseReturn.Qty</h3>
+				<p>Purchase Return (Qty)</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-stats-bars"></i>
+			</div>
+			<a href="~/Inventory/PurchaseReturn" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="small-box widget-bg-three">
+			<div class="inner">
+				<h3>@Model.CurrentMonthPositiveAdjustment.Qty</h3>
+				<p>Positive Adjustment (Qty)</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-stats-bars"></i>
+			</div>
+			<a href="~/Inventory/PositiveAdjustment" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-4">
+		<div class="small-box widget-bg-one">
+			<div class="inner">
+				<h3>@Model.CurrentMonthSalesDelivery.Qty</h3>
+				<p>Sales Delivery (Qty)</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-bag"></i>
+			</div>
+			<a href="~/Inventory/SalesDelivery" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="small-box widget-bg-one">
+			<div class="inner">
+				<h3>@Model.CurrentMonthSalesReturn.Qty</h3>
+				<p>Sales Return (Qty)</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-stats-bars"></i>
+			</div>
+			<a href="~/Inventory/SalesReturn" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="small-box widget-bg-three">
+			<div class="inner">
+				<h3>@Model.CurrentMonthNegativeAdjustment.Qty</h3>
+				<p>Negative Adjustment (Qty)</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-stats-bars"></i>
+			</div>
+			<a href="~/Inventory/NegativeAdjustment" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-6">
+		<div class="small-box text-center widget-bg-one">
+			<div class="inner">
+				<input type="text" class="knob" data-readonly="true" value="@Model.CurrentMonthSalesDeliveryPercentage.Value" data-width="200" data-height="200" data-fgColor="#23b7e5">
+			</div>
+			<div class="icon">
+				<i class="ion ion-person-add"></i>
+			</div>
+			<a href="~/Inventory/SalesDelivery" class="small-box-footer">@Model.CurrentMonthSalesDeliveryPercentage.Name <i class="fa fa-arrow-circle-right"></i></a>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="small-box text-center widget-bg-two">
+			<div class="inner">
+				<input type="text" class="knob" data-readonly="true" value="@Model.CurrentMonthPurchaseReceiptPercentage.Value" data-width="200" data-height="200" data-fgColor="#23b7e5">
+			</div>
+			<div class="icon">
+				<i class="ion ion-person-add"></i>
+			</div>
+			<a href="~/Inventory/PurchaseReceipt" class="small-box-footer">@Model.CurrentMonthPurchaseReceiptPercentage.Name <i class="fa fa-arrow-circle-right"></i></a>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<section class="col-lg-6 connectedSortable">
+		<div class="box box-solid widget-bg-two">
+			<div class="box-header">
+				<i class="fa fa-th"></i>
+				<h3 class="box-title">Purchase Receipt (Qty)</h3>
+			</div>
+			<div class="box-body border-radius-none">
+				<div class="chart" id="purchase-chart" style="height: 250px;"></div>
+			</div>
+			<div class="box-footer no-border">
+				<div class="row">
+					<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+						<input type="text" class="knob" data-readonly="true" value="@Model.PurchaseKPI1.Value" data-width="60" data-height="60" data-fgColor="#899FD4">
+						<div class="knob-label">@Model.PurchaseKPI1.Name</div>
+					</div>
+					<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+						<input type="text" class="knob" data-readonly="true" value="@Model.PurchaseKPI2.Value" data-width="60" data-height="60" data-fgColor="#899FD4">
+						<div class="knob-label">@Model.PurchaseKPI2.Name</div>
+					</div>
+					<div class="col-xs-4 text-center">
+						<input type="text" class="knob" data-readonly="true" value="@Model.PurchaseKPI3.Value" data-width="60" data-height="60" data-fgColor="#899FD4">
+						<div class="knob-label">@Model.PurchaseKPI3.Name</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="col-lg-6 connectedSortable">
+		<div class="box box-solid widget-bg-one">
+			<div class="box-header">
+				<i class="fa fa-th"></i>
+				<h3 class="box-title">Sales Delivery (Qty)</h3>
+			</div>
+			<div class="box-body border-radius-none">
+				<div class="chart" id="sales-chart" style="height: 250px;"></div>
+			</div>
+			<div class="box-footer no-border">
+				<div class="row">
+					<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+						<input type="text" class="knob" data-readonly="true" value="@Model.SalesKPI1.Value" data-width="60" data-height="60" data-fgColor="#39CCCC">
+						<div class="knob-label">@Model.SalesKPI1.Name</div>
+					</div>
+					<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+						<input type="text" class="knob" data-readonly="true" value="@Model.SalesKPI2.Value" data-width="60" data-height="60" data-fgColor="#39CCCC">
+						<div class="knob-label">@Model.SalesKPI2.Name</div>
+					</div>
+					<div class="col-xs-4 text-center">
+						<input type="text" class="knob" data-readonly="true" value="@Model.SalesKPI3.Value" data-width="60" data-height="60" data-fgColor="#39CCCC">
+						<div class="knob-label">@Model.SalesKPI3.Name</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<div class="row">
+	<div class="col-lg-6">
+		<div class="box box-solid widget-bg-zero">
+			<div class="box-body border-radius-none">
+				<div id="GridDiv" style="height: 400px;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="box box-solid widget-bg-zero">
+			<div class="box-body border-radius-none">
+				<div id="GridDiv2" style="height: 400px;"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+    jQuery(function () {
+        new Indotalent.Common.DashboardInventory.MinStockGrid($('#GridDiv'), {}).init();
+        new Indotalent.Common.DashboardInventory.MostSoldGrid($('#GridDiv2'), {}).init();
+    });
+</script>
+
+
+

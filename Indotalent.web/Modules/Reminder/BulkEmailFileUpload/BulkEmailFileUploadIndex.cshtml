@@ -1,0 +1,26 @@
+﻿@inject Serenity.ITextLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer.Get("Db.Reminder.BulkEmailFileUpload.EntityPlural");
+   
+}
+
+<div id="GridDiv"></div>
+<div id="ValidationMessages" style="color: red;"></div> <!-- Message area for validation -->
+
+<script type="text/javascript">
+    jQuery(function () {
+        var result = new Indotalent.Reminder.BulkEmailFileUploadGrid($('#GridDiv'), {}).init();
+
+        Q.initFullHeightGridPage($('#GridDiv'));
+
+        // Assuming 'result' contains the messages
+        if (result.messages && result.messages.length > 0) {
+            var validationHtml = '<ul>';
+            result.messages.forEach(function (message) {
+                validationHtml += '<li>' + message + '</li>';
+            });
+            validationHtml += '</ul>';
+            $('#ValidationMessages').html(validationHtml); // Display messages
+        }
+    });
+</script>

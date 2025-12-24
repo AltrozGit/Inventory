@@ -1,0 +1,20 @@
+﻿using Serenity;
+using Serenity.ComponentModel;
+using Serenity.Data;
+using System;
+using System.ComponentModel;
+using System.Collections.Generic;
+using System.IO;
+
+namespace Indotalent.Reminder.Forms
+{
+    [FormScript("Reminder.WhatsApp")]
+    [BasedOnRow(typeof(WhatsAppRow), CheckNames = true)]
+    public class WhatsAppForm
+    {
+        public String TemplateName { get; set; }
+        public String BroadcastName { get; set; }
+        public String Url { get; set; }
+        public Boolean IsActive { get; set; }
+    }
+}

@@ -1,0 +1,243 @@
+﻿@model Indotalent.Reminder.EmailSendingSummaryModel
+
+@inject Serenity.ITextLocalizer Localizer
+@{
+    ViewData["Title"] = "Email Sending Summary";
+    ViewData["PageId"] = "Email Sending Summary";
+}
+
+@section ContentHeader {
+}
+<style>
+    .header-title {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      
+    }
+
+    .small-box {
+        text-align: center;
+        padding: 10px;
+        border-radius: 5px;
+        color: #fff;
+        width:300px;
+    }
+
+        .small-box p {
+             font-size: 17px;
+            font-weight: bold;
+        }
+
+    .small-box h3 {
+        font-size: 23px;
+        text-align:center;
+        font-weight: bold;
+        margin: 0 0 10px 0;
+        white-space: nowrap;
+        padding: 0;
+    }
+    </style>
+<h3 class="header-title">Email Statistics</h3>
+
+<div class="row">
+    <div class="col-lg-3">
+        <div class="small-box widget-bg-three">
+
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.EmailsSentToday</h3>
+                <p>Emails Sent Today</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+          <div class="small-box widget-bg-three">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.EmailsSentCurrentMonth</h3>
+                <p>Emails Sent Current Month</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="small-box widget-bg-three">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.EmailsSentCurrentSubscription</h3>
+                <p>Emails Sent Current Subscription</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="small-box widget-bg-three">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.TotalEmailsSent</h3>
+                <p>Total Emails Sent</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Active Plans Section -->
+<div class="row">
+    @if (Model.ActivePlans != null && Model.ActivePlans.Any())
+    {
+        <h3 class="header-title" style="margin-left:13px;">Active PLans</h3>
+
+        @foreach (var plan in Model.ActivePlans)
+        {
+            <div class="col-lg-3">
+                <div class="small-box widget-bg-three">
+
+                    <div class="inner" style="height:129px;font-size:30px">
+                        <h3>@plan.PlanName</h3>
+                       
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-analytics"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3">
+                <div class="small-box widget-bg-three">
+
+                    <div class="inner" style="height:129px;font-size:30px">
+
+
+                        <h3>@plan.Cost.Value.ToString("#,##0.00")</h3>
+                        <p>Cost</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-analytics"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="small-box widget-bg-three">
+                    <div class="inner" style="height:129px;font-size:30px">
+
+                        <h3>@plan.Units</h3>
+                        <p>Units</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-analytics"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="small-box widget-bg-three">
+                    <div class="inner" style="height:129px;font-size:30px">
+
+                        <h3>@plan.Frequency</h3>
+                        <p>Frequency</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-analytics"></i>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+   @* else
+    {
+        <div class="col-lg-12">
+            <div class="alert alert-info" role="alert">
+                No active plans available.
+            </div>
+        </div>
+    }*@
+</div>
+<div class="row">
+    @if (Model.Subscriptions != null && Model.Subscriptions.Any())
+    {
+        <p><h3 class="header-title" style="margin-left:13px;">Subscription</h3></p>
+
+        @foreach (var subscription in Model.Subscriptions)
+        {
+           
+            <div class="col-lg-3">
+                <div class="small-box widget-bg-three">
+
+                    <div class="inner" style="height:129px;font-size:30px">
+
+                        <h3>@subscription.StartDate.Value.ToShortDateString()
+                    </h3>
+                        <p>Start Date</p>
+
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-analytics"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="small-box widget-bg-three">
+
+                    <div class="inner" style="height:129px;font-size:30px">
+
+
+
+                        <h3>@subscription.EndDate.Value.ToShortDateString()
+                    </h3>
+                        <p>End Date</p>
+
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-analytics"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="small-box widget-bg-three">
+                    <div class="inner" style="height:129px;font-size:30px">
+
+
+
+                        <h3>@subscription.ActiveEndDate.Value.ToShortDateString()
+                    </h3>
+                        <p>Active End Date</p>
+
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-analytics"></i>
+                    </div>
+                </div>
+            </div>
+         
+            <div class="col-lg-3">
+                <div class="small-box widget-bg-three">
+                    <div class="inner" style="height:129px;font-size:30px">
+
+
+                        <h3>@subscription.CurrentBalanceUnits</h3>
+                        <p>Current Balance Units</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-analytics"></i>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+  @*  else
+    {
+        <div class="col-lg-12">
+            <div class="alert alert-info" role="alert">
+                No active Subscriptions available.
+            </div>
+        </div>
+    }*@
+</div>

@@ -1,0 +1,502 @@
+{
+  "RootNamespace": "Indotalent",
+  "ServerTypings": {
+    "LocalTexts": true
+  },
+  "Restore": {
+    "Exclude": [
+      "/wwwroot/Scripts/serenity/Serenity.CoreLib*.*"
+    ]
+  },
+  "Connections": [
+    {
+      "Key": "Default",
+      "Tables": [
+        {
+          "Tablename": "dbo.Action",
+          "Identifier": "Action",
+          "Module": "Reminder",
+          "PermissionKey": "Reminder:Action"
+        },
+        {
+          "Tablename": "dbo.ActionNotification",
+          "Identifier": "ActionNotification",
+          "Module": "Reminder",
+          "PermissionKey": "Reminder:ActionNotification"
+        },
+        {
+          "Tablename": "dbo.Bill",
+          "Identifier": "Bill",
+          "Module": "Bills",
+          "PermissionKey": "Bills:Bill"
+        },
+        {
+          "Tablename": "dbo.BillDetail",
+          "Identifier": "BillDetail",
+          "Module": "Bills",
+          "PermissionKey": "Bills:BillDetail"
+        },
+        {
+          "Tablename": "dbo.BillPayment",
+          "Identifier": "BillPayment",
+          "Module": "Bills",
+          "PermissionKey": "Bills:BillPayment"
+        },
+        {
+          "Tablename": "dbo.Brand",
+          "Identifier": "Brand",
+          "Module": "Merchandise",
+          "PermissionKey": "Merchandise:Brand"
+        },
+        {
+          "Tablename": "dbo.CashBank",
+          "Identifier": "CashBank",
+          "Module": "Settings",
+          "PermissionKey": "Settings:CashBank"
+        },
+        {
+          "Tablename": "dbo.Category",
+          "Identifier": "Category",
+          "Module": "Merchandise",
+          "PermissionKey": "Merchandise:Category"
+        },
+        {
+          "Tablename": "dbo.Colour",
+          "Identifier": "Colour",
+          "Module": "Merchandise",
+          "PermissionKey": "Merchandise:Colour"
+        },
+        {
+          "Tablename": "dbo.Configuration",
+          "Identifier": "Configuration",
+          "Module": "Merchandise",
+          "PermissionKey": "Merchandise:Configuration"
+        },
+        {
+          "Tablename": "dbo.Country",
+          "Identifier": "Country",
+          "Module": "Settings",
+          "PermissionKey": "Settings:Country"
+        },
+        {
+          "Tablename": "dbo.Customer",
+          "Identifier": "Customer",
+          "Module": "Sales",
+          "PermissionKey": "Sales:Customer"
+        },
+        {
+          "Tablename": "dbo.CustomerContact",
+          "Identifier": "CustomerContact",
+          "Module": "Sales",
+          "PermissionKey": "Sales:Customer"
+        },
+        {
+          "Tablename": "dbo.DueDateReminder",
+          "Identifier": "DueDateReminder",
+          "Module": "Reminder",
+          "PermissionKey": "Reminder:DueDateReminder"
+        },
+        {
+          "Tablename": "dbo.EmailNotification",
+          "Identifier": "EmailNotification",
+          "Module": "Reminder",
+          "PermissionKey": "Reminder:EmailNotification"
+        },
+        {
+          "Tablename": "dbo.Expense",
+          "Identifier": "Expense",
+          "Module": "Merchandise",
+          "PermissionKey": "Merchandise:Expense"
+        },
+        {
+          "Tablename": "dbo.Flavour",
+          "Identifier": "Flavour",
+          "Module": "Merchandise",
+          "PermissionKey": "Merchandise:Flavour"
+        },
+        {
+          "Tablename": "dbo.HSN",
+          "Identifier": "StandardHSNCodes",
+          "Module": "Merchandise",
+          "PermissionKey": "Merchandise:StandardHSNCodes"
+        },
+        {
+          "Tablename": "dbo.Invoice",
+          "Identifier": "Invoice",
+          "Module": "Sales",
+          "PermissionKey": "Sales:Invoice"
+        },
+        {
+          "Tablename": "dbo.InvoiceDetail",
+          "Identifier": "InvoiceDetail",
+          "Module": "Sales",
+          "PermissionKey": "Sales:Invoice"
+        },
+        {
+          "Tablename": "dbo.InvoicePayment",
+          "Identifier": "InvoicePayment",
+          "Module": "Sales",
+          "PermissionKey": "Sales:InvoicePayment"
+        },
+        {
+          "Tablename": "dbo.Location",
+          "Identifier": "Location",
+          "Module": "Inventory",
+          "PermissionKey": "Inventory:Location"
+        },
+        {
+          "Tablename": "dbo.MaterialIssue",
+          "Identifier": "MaterialIssue",
+          "Module": "Material",
+          "PermissionKey": "Material:MaterialIssue"
+        },
+        {
+          "Tablename": "dbo.MaterialIssueDetail",
+          "Identifier": "MaterialIssueDetail",
+          "Module": "Inventory",
+          "PermissionKey": "Invetory.MaterialIssueDetail"
+        },
+        {
+          "Tablename": "dbo.MaterialRequest",
+          "Identifier": "ProjectMaterialRequest",
+          "Module": "Projects",
+          "PermissionKey": "Projects:ProjectMaterialRequest"
+        },
+        {
+          "Tablename": "dbo.MaterialRequestDetail",
+          "Identifier": "ProjectMaterialRequestDetail",
+          "Module": "Proj",
+          "PermissionKey": "Projects:ProjectMaterialRequestDetail"
+        },
+        {
+          "Tablename": "dbo.MaterialRequestStatus",
+          "Identifier": "MaterialRequestStatus",
+          "Module": "Material",
+          "PermissionKey": "Material.MaterialRequestStatus"
+        },
+        {
+          "Tablename": "dbo.MaterialRequestTracking",
+          "Identifier": "MaterialRequestTracking",
+          "Module": "Material_Request",
+          "PermissionKey": "Material_Request:MaterialRequestTracking"
+        },
+        {
+          "Tablename": "dbo.MaterialReturn",
+          "Identifier": "MaterialReturn",
+          "Module": "Material",
+          "PermissionKey": "Material:MaterialReturn"
+        },
+        {
+          "Tablename": "dbo.MaterialReturnDetail",
+          "Identifier": "MaterialReturnDetail",
+          "Module": "Material",
+          "PermissionKey": "Material:MaterialReturnDetail"
+        },
+        {
+          "Tablename": "dbo.Material_Request",
+          "Identifier": "Material_Request",
+          "Module": "Inventory",
+          "PermissionKey": "Inventory.Material_Request"
+        },
+        {
+          "Tablename": "dbo.Material_RequestDetail",
+          "Identifier": "Material_RequestDetail",
+          "Module": "Inventory",
+          "PermissionKey": "Inventory.Material_RequestDetail"
+        },
+        {
+          "Tablename": "dbo.Material_RequestStatus",
+          "Identifier": "Material_RequestStatus",
+          "Module": "Material_Request",
+          "PermissionKey": "Material_Request:Material_RequestStatus"
+        },
+        {
+          "Tablename": "dbo.NegativeAdjustment",
+          "Identifier": "NegativeAdjustment",
+          "Module": "Inventory",
+          "PermissionKey": "Inventory:NegativeAdjustment"
+        },
+        {
+          "Tablename": "dbo.NegativeAdjustmentDetail",
+          "Identifier": "NegativeAdjustmentDetail",
+          "Module": "Inventory",
+          "PermissionKey": "Inventory:NegativeAdjustment"
+        },
+        {
+          "Tablename": "dbo.NotificationGroup",
+          "Identifier": "NotificationGroup",
+          "Module": "Reminder",
+          "PermissionKey": "Reminder:NotificationGroup"
+        },
+        {
+          "Tablename": "dbo.PaymentTerm",
+          "Identifier": "PaymentTerm",
+          "Module": "Purchase",
+          "PermissionKey": "Purchase:PaymentTerm"
+        },
+        {
+          "Tablename": "dbo.PositiveAdjustment",
+          "Identifier": "PositiveAdjustment",
+          "Module": "Inventory",
+          "PermissionKey": "Inventory:PositiveAdjustment"
+        },
+        {
+          "Tablename": "dbo.PositiveAdjustmentDetail",
+          "Identifier": "PositiveAdjustmentDetail",
+          "Module": "Inventory",
+          "PermissionKey": "Inventory:PositiveAdjustment"
+        },
+        {
+          "Tablename": "dbo.Product",
+          "Identifier": "Product",
+          "Module": "Merchandise",
+          "PermissionKey": "Merchandise:Product"
+        },
+        {
+          "Tablename": "dbo.Project",
+          "Identifier": "Project",
+          "Module": "Projects",
+          "PermissionKey": "Projects.Project"
+        },
+        {
+          "Tablename": "dbo.ProjectExpense",
+          "Identifier": "ProjectExpense",
+          "Module": "Projects",
+          "PermissionKey": "Projects:ProjectExpense"
+        },
+        {
+          "Tablename": "dbo.ProjectFund",
+          "Identifier": "ProjectFund",
+          "Module": "Projects",
+          "PermissionKey": "Projects:ProjectFund"
+        },
+        {
+          "Tablename": "dbo.ProjectMaterialRequest",
+          "Identifier": "ProjectMaterialReq",
+          "Module": "Proje",
+          "PermissionKey": "Projects:ProjectMaterialRequest"
+        },
+        {
+          "Tablename": "dbo.ProjectMaterialRequestDetail",
+          "Identifier": "ProjectMaterialRequestDetail",
+          "Module": "Projec",
+          "PermissionKey": "Projects:ProjectMaterialRequestDetail"
+        },
+        {
+          "Tablename": "dbo.ProjectUsers",
+          "Identifier": "ProjectUsers",
+          "Module": "Administration",
+          "PermissionKey": "Administration:ProjectUsers"
+        },
+        {
+          "Tablename": "dbo.PurchaseOrder",
+          "Identifier": "PurchaseOrder",
+          "Module": "Purchase",
+          "PermissionKey": "Purchase:PurchaseOrder"
+        },
+        {
+          "Tablename": "dbo.PurchaseOrderDetail",
+          "Identifier": "PurchaseOrderDetail",
+          "Module": "Purchase",
+          "PermissionKey": "Purchase:PurchaseOrder"
+        },
+        {
+          "Tablename": "dbo.PurchaseReceipt",
+          "Identifier": "PurchaseReceipt",
+          "Module": "Purchase",
+          "PermissionKey": "Purchase:PurchaseReceipt"
+        },
+        {
+          "Tablename": "dbo.PurchaseReceiptDetail",
+          "Identifier": "PurchaseReceiptDetail",
+          "Module": "Purchase",
+          "PermissionKey": "Purchase:PurchaseReceiptDetail"
+        },
+        {
+          "Tablename": "dbo.PurchaseReturn",
+          "Identifier": "PurchaseReturn",
+          "Module": "Purchase",
+          "PermissionKey": "Purchase:PurchaseReturn"
+        },
+        {
+          "Tablename": "dbo.PurchaseReturnDetail",
+          "Identifier": "PurchaseReturnDetail",
+          "Module": "Purchase",
+          "PermissionKey": "Purchase:PurchaseReturnDetail"
+        },
+        {
+          "Tablename": "dbo.PurchaseTax",
+          "Identifier": "PurchaseTax",
+          "Module": "Settings",
+          "PermissionKey": "Settings:PurchaseTax"
+        },
+        {
+          "Tablename": "dbo.Quotation",
+          "Identifier": "Quotation",
+          "Module": "Projects",
+          "PermissionKey": "Projects:Quotation"
+        },
+        {
+          "Tablename": "dbo.QuotationDetail",
+          "Identifier": "QuotationDetail",
+          "Module": "Projects",
+          "PermissionKey": "Projects:QuotationDetail"
+        },
+        {
+          "Tablename": "dbo.SAC",
+          "Identifier": "StandardSACCodes",
+          "Module": "Merchandise",
+          "PermissionKey": "Merchandise:StandardSACCodes"
+        },
+        {
+          "Tablename": "dbo.SalesChannel",
+          "Identifier": "SalesChannel",
+          "Module": "Sales",
+          "PermissionKey": "Sales:SalesChannel"
+        },
+        {
+          "Tablename": "dbo.SalesDelivery",
+          "Identifier": "SalesDelivery",
+          "Module": "Sales",
+          "PermissionKey": "Sales:SalesDelivery"
+        },
+        {
+          "Tablename": "dbo.SalesDeliveryDetail",
+          "Identifier": "SalesDeliveryDetail",
+          "Module": "Sales",
+          "PermissionKey": "Sales:SalesDeliveryDetail"
+        },
+        {
+          "Tablename": "dbo.SalesOrder",
+          "Identifier": "SalesOrder",
+          "Module": "Sales",
+          "PermissionKey": "Sales:SalesOrder"
+        },
+        {
+          "Tablename": "dbo.SalesOrderDetail",
+          "Identifier": "SalesOrderDetail",
+          "Module": "Sales",
+          "PermissionKey": "Sales:SalesOrder"
+        },
+        {
+          "Tablename": "dbo.SalesReturn",
+          "Identifier": "SalesReturn",
+          "Module": "Sales",
+          "PermissionKey": "Sales:SalesReturn"
+        },
+        {
+          "Tablename": "dbo.SalesReturnDetail",
+          "Identifier": "SalesReturnDetail",
+          "Module": "Sales",
+          "PermissionKey": "Sales:SalesReturnDetail"
+        },
+        {
+          "Tablename": "dbo.SalesTax",
+          "Identifier": "SalesTax",
+          "Module": "Settings",
+          "PermissionKey": "Settings:SalesTax"
+        },
+        {
+          "Tablename": "dbo.Shipper",
+          "Identifier": "Shipper",
+          "Module": "Inventory",
+          "PermissionKey": "Inventory:Shipper"
+        },
+        {
+          "Tablename": "dbo.Size",
+          "Identifier": "Size",
+          "Module": "Merchandise",
+          "PermissionKey": "Merchandise:Size"
+        },
+        {
+          "Tablename": "dbo.State",
+          "Identifier": "State",
+          "Module": "Settings",
+          "PermissionKey": "Settings:State"
+        },
+        {
+          "Tablename": "dbo.Status",
+          "Identifier": "Status",
+          "Module": "Inventory",
+          "PermissionKey": "Inventory.Status"
+        },
+        {
+          "Tablename": "dbo.Template",
+          "Identifier": "Template",
+          "Module": "Reminder",
+          "PermissionKey": "Reminder:Template"
+        },
+        {
+          "Tablename": "dbo.Tenant",
+          "Identifier": "MyCompany",
+          "Module": "Settings",
+          "PermissionKey": "Settings:MyCompany"
+        },
+        {
+          "Tablename": "dbo.TransferOrder",
+          "Identifier": "TransferOrder",
+          "Module": "Inventory",
+          "PermissionKey": "Inventory:TransferOrder"
+        },
+        {
+          "Tablename": "dbo.TransferOrderDetail",
+          "Identifier": "TransferOrderDetail",
+          "Module": "Inventory",
+          "PermissionKey": "Inventory:TransferOrder"
+        },
+        {
+          "Tablename": "dbo.Uom",
+          "Identifier": "Uom",
+          "Module": "Merchandise",
+          "PermissionKey": "Merchandise:Uom"
+        },
+        {
+          "Tablename": "dbo.UserProjects",
+          "Identifier": "UserProjects",
+          "Module": "Administration",
+          "PermissionKey": "Administration:Security"
+        },
+        {
+          "Tablename": "dbo.Vendor",
+          "Identifier": "Vendor",
+          "Module": "Purchase",
+          "PermissionKey": "Purchase:Vendor"
+        },
+        {
+          "Tablename": "dbo.VendorContact",
+          "Identifier": "VendorContact",
+          "Module": "Purchase",
+          "PermissionKey": "Purchase:VendorContact"
+        },
+        {
+          "Tablename": "dbo.vwAvailableStock",
+          "Identifier": "VwAvailableStock",
+          "Module": "AvailableStock",
+          "PermissionKey": "Administration:General"
+        },
+        {
+          "Tablename": "dbo.vwProjectFund",
+          "Identifier": "VwProjectFund",
+          "Module": "Projects",
+          "PermissionKey": "Administration:General"
+        },
+        {
+          "Tablename": "dbo.Warehouse",
+          "Identifier": "Warehouse",
+          "Module": "Inventory",
+          "PermissionKey": "Inventory:Warehouse"
+        },
+        {
+          "Tablename": "dbo.WhatsAppTemplate",
+          "Identifier": "WhatsAppTemplate",
+          "Module": "WhatsApp",
+          "PermissionKey": "Administration:General"
+        }
+      ]
+    }
+  ],
+  "UpgradeInfo": {
+    "InitialType": "Community",
+    "InitialVersion": "5.0.51.8"
+  }
+}

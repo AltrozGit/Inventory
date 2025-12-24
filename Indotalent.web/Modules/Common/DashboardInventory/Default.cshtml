@@ -1,0 +1,18 @@
+﻿@inject Serenity.ITextLocalizer Localizer
+@{
+	ViewData["Title"] = "Default";
+    ViewData["PageId"] = "Default";
+}
+
+@section Head {
+    @Html.StyleBundle("Pages/Dashboard")
+    @Html.ScriptBundle("Pages/Dashboard")
+}
+
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <strong>
+            Welcome to Altroz Inventory Management System
+        </strong>
+    </div>
+</div>

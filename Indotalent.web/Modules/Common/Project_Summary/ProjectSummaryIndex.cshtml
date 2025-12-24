@@ -1,0 +1,130 @@
+﻿@model Indotalent.Common.ProjectSummaryModel
+
+@inject Serenity.ITextLocalizer Localizer
+@{
+	ViewData["Title"] = "Dashboard";
+	ViewData["PageId"] = "Dashboard";
+}
+
+@section Head {
+    @Html.StyleBundle("Pages/Dashboard")
+    @Html.ScriptBundle("Pages/Dashboard")
+
+	<script type="text/javascript">
+
+		$(function () {
+
+			$(".knob").knob({
+				'format': function (value) {
+					return value + '%';
+				}
+			});
+		});
+
+		function ReloadProjectEvents() {
+			var selectedId = $(ddlProject).val();
+			window.location.href = '@Url.Action("Index", "Project_Summary")' + '?ProjectId=' + selectedId;
+		}
+
+	</script>
+}
+
+@section ContentHeader {
+
+}
+
+<div class="row">
+	<div class="col-lg-3">
+		<div class="small-box widget-bg-two">
+
+			<div class="inner" style="height:129px">
+				<p style="font-weight:500">Select Project:</p>
+				<div>
+					<select id="ddlProject" asp-items="@(new SelectList(@ViewBag.ProjectList, "Id", "Name", @ViewBag.CurrentProjectId))"
+							onchange="ReloadProjectEvents()" style="width: 175px;
+    height: 24px;
+    line-height: 23px;
+    padding: 0 0 0 6px;
+    display: block;
+    border: 1px solid #aaa;
+    white-space: nowrap;
+    border-radius: 4px;
+    text-decoration: none;
+    background-clip: padding-box;
+    overflow: hidden;
+    user-select: none;
+    background-color: #fff;
+    background-image: linear-gradient(to top, #eee 0%, #fff 50%);
+    color:black !important;
+    box-sizing: content-box;">
+				</select>
+			</div>
+		</div>
+		<div class="icon">
+			<i class="ion ion-bag"></i>
+		</div>
+	
+	</div>
+	</div>
+	<div class="col-lg-3">
+		<div class="small-box widget-bg-one">
+			<div class="inner" style="height:129px;font-size:30px">
+				<h3 style="font-size:32px">@Model.AllocatedFund.ToString("##,00.00") </h3>
+				<p>Allocated Fund (@Model.Currency)</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-bag"></i>
+			</div>
+		
+		</div>
+	</div>
+	<div class="col-lg-3">
+		<div class="small-box widget-bg-two">
+			<div class="inner" style="height:129px">
+				<h3 style="font-size:32px">@Model.CurrentProjectCost.ToString("##,00.00") </h3>
+				<p>Current Project Cost (@Model.Currency)</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-bag"></i>
+			</div>
+			
+		</div>
+	</div>
+	<div class="col-lg-3">
+		<div class="small-box widget-bg-one">
+			<div class="inner" style="height:129px">
+				<h3 style="font-size:32px">@Model.CurrentBalanceFund.ToString("##,00.00") </h3>
+				<p>Current Balance Fund (@Model.Currency)</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-bag"></i>
+			</div>
+			
+		</div>
+	</div>
+
+</div>
+<div class="row">
+	<div class="col-lg-6">
+		<div class="box box-solid widget-bg-zero">
+			<div class="box-body border-radius-none">
+				<div id="GridDiv" style="height: 400px;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="box box-solid widget-bg-zero">
+			<div class="box-body border-radius-none">
+				<div id="GridDiv2" style="height: 400px;"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	jQuery(function () {
+		new Indotalent.Common.IssueStockGrid($('#GridDiv'), {}).init();
+		new Indotalent.Common.ProjectExpensesGrid($('#GridDiv2'), {}).init();
+	});
+</script>

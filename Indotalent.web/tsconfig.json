@@ -1,0 +1,24 @@
+﻿{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "declaration": true,
+    "emitBOM": true,
+    "experimentalDecorators": true,
+   
+    "jsx": "react",
+    "noEmitHelpers": true,
+    "outFile": "wwwroot/Scripts/site/Indotalent.Web.js",
+    "preserveConstEnums": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "target": "ES5",
+    "typeRoots": [
+      "./node_modules/@types/",
+      "./typings/"
+    ]
+  },
+  "include": [
+    "./Imports/**/*",
+    "./Modules/**/*"
+  ]
+}

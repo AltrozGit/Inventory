@@ -1,0 +1,149 @@
+﻿@model Indotalent.Sales.InvoicePaymentPrintData
+
+@if ((bool?)ViewData["Printing"] == true)
+{
+    Layout = "_LayoutNoNavigation";
+}
+
+<section class="invoice" style="border: 1px solid">
+  
+   
+
+    <div class="row logo-info" style="display: flex; align-items: center; height:101px">
+        <div class="col-sm-6 invoice-col" style="flex: 1; text-align: left; padding-top:1px;padding-left:40px">
+            @if (!String.IsNullOrWhiteSpace(Model.Company.Logo))
+            {
+                <img src="@($"/upload/{Model.Company.Logo}")" height="100" width="180" />
+            }
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-6 invoice-col" style="flex: 1; text-align: center;">
+            <h2 class="page-header" style="margin: 0;">
+                <br><br>
+                PAYMENT RECEIVE
+            </h2>
+        </div>
+    </div>
+    <div row order-info" style="text-align:center">
+        <b> Billing Details:</b>
+    </div>
+
+    <div class="row bill-info" style="border: 1px solid">
+
+        <!-- /.col -->
+        <div class="col-xs-12 bill-col" style="border-right: 1px solid #000;">
+            <b>&nbsp;&nbsp;&nbsp;&nbsp; Receive Payment From</b>
+            <address>
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;@Model.Customer.Name</strong><br>
+
+                &nbsp;&nbsp;&nbsp;&nbsp;@Model.Customer.Street<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;@Model.Customer.City @Model.Customer.StateName @Model.Customer.ZipCode<br>
+                <b> &nbsp;&nbsp;&nbsp;&nbsp;GST:</b> @Model.Customer.GSTNumber<br>
+                <b> &nbsp;&nbsp;&nbsp;&nbsp;Phone:</b> @Model.Customer.Phone<br>
+                <b> &nbsp;&nbsp;&nbsp;&nbsp;Email:</b> @Model.Customer.Email
+            </address>
+        </div>
+
+    </div>
+    <br>
+    <div row order-info" style="text-align:center">
+        <b> Payment Details:</b>
+    </div>
+    <div class="row order-info" style="border: 1px solid">
+
+        <!-- /.col -->
+        <div class="col-xs-3 billorder-col" style="border-right: 1px solid #000;">
+            <b>  &nbsp;&nbsp;&nbsp;&nbsp;Payment Number:</b><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;  @Model.Header.Number
+        </div>
+       
+        <div class="col-xs-3 billorder-col" style="border-right: 1px solid #000;">
+            <b>Payment Date:</b> <br>
+            @Model.Header.PaymentDate.Value.ToShortDateString()
+
+        </div>
+        <div class="col-xs-3 billorder-col" style="border-right: 1px solid #000;">
+
+            <b>Invoice Number:</b><br>
+            @Model.Header.InvoiceNumber
+        </div>
+        <div class="col-xs-3 billorder-col">
+            <b>  Invoice Amount:</b><br>
+            @Model.Company.Currency @Model.Header.InvoiceAmount.Value.ToString("#,##0.00")
+
+        </div>
+        <!-- /.col -->
+
+    </div>
+    <br>
+    <!-- Table row -->
+    <div class="row" style="padding-left:5px;padding-right:5px;">
+        <div class="col-xs-12 table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Payment Amount:</b></td>
+                        <td>@Model.Company.Currency @Model.Header.PaymentAmount.Value.ToString("#,##0.00")</td>
+                    </tr>
+                    <tr>
+                        <td><b>Payment Mode:</b></td>
+                        <td>@Model.Header.CashBankName</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+        </div>
+        <!-- /.col -->
+    </div>
+    <br>
+    <br>
+
+    <div class="row" style="padding-left:5px;padding-right:5px;">
+        <div class="col-xs-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">Prepared By</th>
+                        <th class="text-center">Confirmed By</th>
+                        <th class="text-center">Approved By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </td>
+                        <td>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </td>
+                        <td>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+</section>

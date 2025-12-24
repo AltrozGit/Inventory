@@ -1,0 +1,260 @@
+﻿using Indotalent.Settings;
+using Serenity;
+using Serenity.ComponentModel;
+using Serenity.Data;
+using Serenity.Data.Mapping;
+using Serenity.Extensions.Entities;
+
+using System;
+using System.ComponentModel;
+using System.IO;
+using Indotalent.Web.Modules.Settings.CashBank;
+
+namespace Indotalent.Bills
+{
+    [ConnectionKey("Default"), Module("Bills"), TableName("[dbo].[BillPayment]")]
+    [DisplayName("Bill Booked Reciept"), InstanceName("Bill Booked Reciept")]
+    [LookupScript(LookupType = typeof(MultiTenantRowLookupScript<>))]
+    [ReadPermission("Bills:BillPayment")]
+    [ModifyPermission("Bills:BillPayment")]
+    public sealed class BillPaymentRow : LoggingRow<BillPaymentRow.RowFields>, IIdRow, INameRow, IMultiTenantRow
+    
+    {
+        [DisplayName("Id"), Identity, IdProperty]
+        public Int32? Id
+        {
+            get => fields.Id[this];
+            set => fields.Id[this] = value;
+        }
+
+        [DisplayName("Bill#"), NotNull, ForeignKey("[dbo].[Bill]", "Id"), LeftJoin("jBill"), TextualField("BillNumber")]
+        [LookupEditor(typeof(BillRow))]
+        [Updatable(false)]
+        public Int32? BillId
+        {
+            get => fields.BillId[this];
+            set => fields.BillId[this] = value;
+        }
+
+        [DisplayName("Bill"), Expression("jBill.[Number]"), MinSelectLevel(SelectLevel.List)]
+        [Insertable(false), Updatable(false)]
+        public String BillNumber
+        {
+            get => fields.BillNumber[this];
+            set => fields.BillNumber[this] = value;
+        }
+
+        [DisplayName("Bill Booked"), Size(200), NotNull, QuickSearch, NameProperty]
+
+        [DefaultValue("auto")]
+        public String Number
+        {
+            get => fields.Number[this];
+            set => fields.Number[this] = value;
+        }
+
+        [DisplayName("Description"), Size(1000)]
+        public String Description
+        {
+            get => fields.Description[this];
+            set => fields.Description[this] = value;
+        }
+
+        [DisplayName("Payment Date"), NotNull,QuickSearch]
+        public DateTime? PaymentDate
+        {
+            get => fields.PaymentDate[this];
+            set => fields.PaymentDate[this] = value;
+        }
+
+        [DisplayName("Cash Bank"), NotNull, ForeignKey("[dbo].[CashBank]", "Id"), LeftJoin("jCashBank"), TextualField("CashBankName")]
+        [LookupEditor(typeof(CashBankLookup), InplaceAdd = true, DialogType = "Indotalent.Settings.CashBankDialog")]
+        public Int32? CashBankId
+        {
+            get => fields.CashBankId[this];
+            set => fields.CashBankId[this] = value;
+        }
+
+        [DisplayName("Cash Bank"), Expression("jCashBank.[Name]"), MinSelectLevel(SelectLevel.List)]
+        [Insertable(false), Updatable(false)]
+        public String CashBankName
+        {
+            get => fields.CashBankName[this];
+            set => fields.CashBankName[this] = value;
+        }
+
+        [DisplayName("Bill Amount"), NotNull]
+        [DefaultValue(0), Updatable(false)]
+        public Double? BillAmount
+        {
+            get => fields.BillAmount[this];
+            set => fields.BillAmount[this] = value;
+        }
+
+        [DisplayName("Payment Amount"), NotNull, DecimalEditor(Decimals = 2, MinValue = 0), DisplayFormat("#,##0.##")]
+        [DefaultValue(0)]
+        public Double? PaymentAmount
+        {
+            get => fields.PaymentAmount[this];
+            set => fields.PaymentAmount[this] = value;
+        }
+
+        [DisplayName("Purchase Order"), Expression("jBill.[PurchaseOrderId]"), ForeignKey("[dbo].[PurchaseOrder]", "Id"), LeftJoin("jPurchaseOrder")]
+        public Int32? PurchaseOrderId
+        {
+            get => fields.PurchaseOrderId[this];
+            set => fields.PurchaseOrderId[this] = value;
+        }
+
+        [DisplayName("Vendor"), Expression("jPurchaseOrder.[VendorId]"), ForeignKey("[dbo].[Vendor]", "Id"), LeftJoin("jVendor")]
+        public Int32? VendorId
+        {
+            get => fields.VendorId[this];
+            set => fields.VendorId[this] = value;
+        }
+
+        [DisplayName("Vendor Name"), Expression("jVendor.[Name]"), MinSelectLevel(SelectLevel.List)]
+        [Insertable(false), Updatable(false)]
+        public String VendorName
+        {
+            get => fields.VendorName[this];
+            set => fields.VendorName[this] = value;
+        }
+
+        [DisplayName("Vendor Street"), Expression("jVendor.[Street]"), MinSelectLevel(SelectLevel.List)]
+        [Insertable(false), Updatable(false)]
+        public String VendorStreet
+        {
+            get => fields.VendorStreet[this];
+            set => fields.VendorStreet[this] = value;
+        }
+
+        [DisplayName("Vendor City"), Expression("jVendor.[City]"), MinSelectLevel(SelectLevel.List)]
+        [Insertable(false), Updatable(false)]
+        public String VendorCity
+        {
+            get => fields.VendorCity[this];
+            set => fields.VendorCity[this] = value;
+        }
+
+        [DisplayName("Vendor State"), Expression("jVendor.[StateId]"), ForeignKey("[dbo].[State]", "Id"), LeftJoin("jState"), TextualField("StateName")]
+        [Insertable(false), Updatable(false)]
+        public Int32? VendorState
+        {
+            get => fields.VendorState[this];
+            set => fields.VendorState[this] = value;
+        }
+
+
+        [DisplayName("Vendor State"), Expression("jState.[Name]")]
+        [Insertable(false), Updatable(false)]
+        public String VendorStateName
+        {
+            get => fields.VendorStateName[this];
+            set => fields.VendorStateName[this] = value;
+        }
+
+
+        [DisplayName("Vendor Zip Code"), Expression("jVendor.[ZipCode]"), MinSelectLevel(SelectLevel.List)]
+        [Insertable(false), Updatable(false)]
+        public String VendorZipCode
+        {
+            get => fields.VendorZipCode[this];
+            set => fields.VendorZipCode[this] = value;
+        }
+
+        [DisplayName("Vendor Phone"), Expression("jVendor.[Phone]"), MinSelectLevel(SelectLevel.List)]
+        [Insertable(false), Updatable(false)]
+        public String VendorPhone
+        {
+            get => fields.VendorPhone[this];
+            set => fields.VendorPhone[this] = value;
+        }
+
+        [DisplayName("Vendor Email"), Expression("jVendor.[Email]"), MinSelectLevel(SelectLevel.List)]
+        [Insertable(false), Updatable(false)]
+        public String VendorEmail
+        {
+            get => fields.VendorEmail[this];
+            set => fields.VendorEmail[this] = value;
+        }
+
+        [DisplayName("Procurement"), Size(200)]
+        public String ProcurementGroup
+        {
+            get => fields.ProcurementGroup[this];
+            set => fields.ProcurementGroup[this] = value;
+        }
+
+        [DisplayName("Tenant"), ForeignKey("Tenant", "TenantId"), LeftJoin("jTenant")]
+        [Insertable(false), Updatable(false)]
+        public Int32? TenantId
+        {
+            get { return Fields.TenantId[this]; }
+            set { Fields.TenantId[this] = value; }
+        }
+
+        [DisplayName("Tenant"), Expression("jTenant.TenantName")]
+        public String TenantName
+        {
+            get { return Fields.TenantName[this]; }
+            set { Fields.TenantName[this] = value; }
+        }
+
+        [DisplayName("Currency"), Size(10), Expression("jTenant.Currency"), Insertable(false), Updatable(false), MinSelectLevel(SelectLevel.List)]
+        public String CurrencyName
+        {
+            get => fields.CurrencyName[this];
+            set => fields.CurrencyName[this] = value;
+        }
+
+        public Int32Field TenantIdField
+        {
+            get { return Fields.TenantId; }
+        }
+
+        public BillPaymentRow()
+            : base()
+        {
+        }
+
+        public BillPaymentRow(RowFields fields)
+            : base(fields)
+        {
+        }
+
+        public class RowFields : LoggingRowFields
+        {
+            public Int32Field Id;
+            public Int32Field BillId;
+            public StringField Number;
+            public StringField Description;
+            public DateTimeField PaymentDate;
+            public Int32Field CashBankId;
+            public DoubleField BillAmount;
+            public DoubleField PaymentAmount;
+
+            public StringField BillNumber;
+            public StringField CashBankName;
+
+            public Int32Field PurchaseOrderId;
+
+            public Int32Field VendorId;
+            public StringField VendorName;
+            public StringField VendorStreet;
+            public StringField VendorCity;
+            public Int32Field VendorState;
+            public StringField VendorStateName;
+            public StringField VendorZipCode;
+            public StringField VendorPhone;
+            public StringField VendorEmail;
+
+            public StringField ProcurementGroup;
+
+            public StringField CurrencyName;
+            public Int32Field TenantId;
+            public StringField TenantName;
+
+        }
+    }
+}

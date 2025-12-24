@@ -1,0 +1,130 @@
+﻿using Indotalent.Web.Modules.Settings.PurchaseTax;
+using Indotalent.Web.Modules.Settings.SalesTax;
+using Serenity;
+using Serenity.ComponentModel;
+using Serenity.Data;
+using Serenity.Data.Mapping;
+using Serenity.Extensions.Entities;
+using System;
+using System.ComponentModel;
+using System.IO;
+using static Indotalent.Web.Common.Enums;
+
+namespace Indotalent.Settings
+{
+    [ConnectionKey("Default"), Module("Settings"), TableName("[dbo].[SalesTax]")]
+    [DisplayName("Sales Tax"), InstanceName("Sales Tax")]
+    [ReadPermission("Settings:SalesTax")]
+    [ModifyPermission("Settings:SalesTax")]
+    [LookupScript(LookupType = typeof(MultiTenantRowLookupScript<>))]
+    public sealed class SalesTaxRow : LoggingRow<SalesTaxRow.RowFields>, IIdRow, INameRow, IMultiTenantRow
+    {
+        [DisplayName("Id"), Identity, IdProperty]
+        public Int32? Id
+        {
+            get => fields.Id[this];
+            set => fields.Id[this] = value;
+        }
+
+        [DisplayName("Name"), Size(10), NotNull, QuickSearch, NameProperty]
+        public String Name
+        {
+            get => fields.Name[this];
+            set => fields.Name[this] = value;
+        }
+
+        [DisplayName("Description"), Size(1000)]
+        public String Description
+        {
+            get => fields.Description[this];
+            set => fields.Description[this] = value;
+        }
+
+        [DisplayName("Tax Rate Percentage"), DecimalEditor(MinValue = -100, MaxValue = 100, AllowNegatives = true, Decimals = 2), NotNull]
+        public Double? TaxRatePercentage
+        {
+            get => fields.TaxRatePercentage[this];
+            set => fields.TaxRatePercentage[this] = value;
+        }
+
+        [DisplayName("Tenant"), ForeignKey("Tenant", "TenantId"), LeftJoin("jTenant")]
+        [Insertable(false), Updatable(false)]
+        public Int32? TenantId
+        {
+            get { return Fields.TenantId[this]; }
+            set { Fields.TenantId[this] = value; }
+        }
+
+        [DisplayName("Tenant"), Expression("jTenant.TenantName")]
+        public String TenantName
+        {
+            get { return Fields.TenantName[this]; }
+            set { Fields.TenantName[this] = value; }
+        }
+
+
+        [DisplayName("TaxType")]
+        public SalesTaxType? TaxType
+        {
+            get => (SalesTaxType?)fields.TaxType[this];
+            set => fields.TaxType[this] = (Int32?)value;
+
+        }
+
+
+
+        [DisplayName("SGST")]
+        public Double? SGST
+        {
+            get => fields.SGST[this];
+            set => fields.SGST[this] = value;
+
+        }
+
+
+        [DisplayName("CGST")]
+        public Double? CGST
+        {
+            get => fields.CGST[this];
+            set => fields.CGST[this] = value;
+
+        }
+
+        [DisplayName("IGST")]
+        public Double? IGST
+        {
+            get => fields.IGST[this];
+            set => fields.IGST[this] = value;
+
+        }
+
+        public Int32Field TenantIdField
+        {
+            get { return Fields.TenantId; }
+        }
+
+        public SalesTaxRow()
+            : base()
+        {
+        }
+
+        public SalesTaxRow(RowFields fields)
+            : base(fields)
+        {
+        }
+
+        public class RowFields : LoggingRowFields
+        {
+            public Int32Field Id;
+            public StringField Name;
+            public StringField Description;
+            public DoubleField TaxRatePercentage;
+            public Int32Field TenantId;
+            public StringField TenantName;
+            public Int32Field TaxType;
+            public DoubleField SGST;
+            public DoubleField CGST;
+            public DoubleField IGST;
+        }
+    }
+}

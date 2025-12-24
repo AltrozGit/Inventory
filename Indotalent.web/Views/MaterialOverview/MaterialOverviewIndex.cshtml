@@ -1,0 +1,224 @@
+﻿@model Indotalent.Material.MaterialOverviewModel
+
+@inject Serenity.ITextLocalizer Localizer
+@{
+    ViewData["Title"] = "Material Overview";
+    ViewData["PageId"] = "Material Overview";
+}
+
+@section ContentHeader {
+}
+
+<div class="row">
+    
+    
+    <div class="col-lg-3">
+        <div class="small-box widget-bg-one">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.MaterialRequestsThisMonth</h3>
+                <p>Material Request Sent This Month(new)</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="small-box widget-bg-two">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.PurchaseOrderThisMonth</h3>
+                <p>Purchase Order Sent This Month(open)</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div> 
+
+    <div class="col-lg-3">
+        <div class="small-box widget-bg-three">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.MaterialIssuesThisMonth</h3>
+                <p>Material Issue This Month(completed)</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="small-box widget-bg-one">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.TotalRequestMonthCount</h3>
+                <p> Total Material Request(new) </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+
+<div class="row">
+
+    <div class="col-lg-3">
+        <div class="small-box widget-bg-one">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.TotalMaterialRequests</h3>
+                <p> Total Material Request(new) </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-3">
+        <div class="small-box widget-bg-two">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.TotalPurchaseOrder</h3>
+                <p>Total Purchase Order(open) </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-3">
+        <div class="small-box widget-bg-three">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.TotalMaterialIssue</h3>
+                <p>Total Material Issue(Completed) </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="small-box widget-bg-one">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.TotalRequestCount</h3>
+                <p> Total Request Count </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+@*  <div class="col-lg-3">
+    <div class="small-box widget-bg-three">
+        <div class="inner" style="height:129px;font-size:30px">
+            <h3>@Model.TotalMaterialRequests</h3>
+            <p>Total Material Request </p>
+        </div>
+        <div class="icon">
+            <i class="ion ion-email"></i>
+        </div>
+    </div>
+</div>  *@
+
+    @* <div class="col-lg-3">
+        <div class="small-box widget-bg-three">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.MaterialRequestsThisYear</h3>
+                <p>Material Request Sent This Year</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+@* <div class="row">
+    <div class="col-lg-4">
+        <div class="small-box widget-bg-one">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.MaterialIssuesToday</h3>
+                <p>Material Issue Today</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="small-box widget-bg-two">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.MaterialIssuesThisMonth</h3>
+                <p>Material Issue This Month</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="small-box widget-bg-three">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.MaterialIssuesThisYear</h3>
+                <p>Material Issue This Year</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+</div> *@
+
+
+    </div>
+    @* <div class="col-lg-3">
+        <div class="small-box widget-bg-three">
+            <div class="inner" style="height:129px;font-size:30px">
+                <h3>@Model.MaterialRequestsThisYear</h3>
+                <p>Material Request Sent This Year</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div> *@
+    
+   @*  <div class="row">
+    <div class="col-lg-4">
+        <div class="small-box widget-bg-one">
+            <div class="inner" style="height:129px;font-size:30px">
+                    <h3>@Model.TotalPurchaseOrder</h3>
+                <p>Total Purchase Order(new) </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-email"></i>
+            </div>
+        </div>
+    </div>
+ *@
+
+
+
+    @* <div class="col-lg-3">
+    <div class="small-box widget-bg-one">
+    <div class="inner" style="height:129px;font-size:30px">
+    <h3>@Model.MaterialRequestsToday</h3>
+    <p>Material Request Sent Today</p>
+    </div>
+    <div class="icon">
+    <i class="ion ion-email"></i>
+    </div>
+    </div>
+    </div> *@

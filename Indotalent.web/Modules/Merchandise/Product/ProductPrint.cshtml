@@ -1,0 +1,146 @@
+﻿@model Indotalent.Merchandise.ProductPrintData
+
+@if ((bool?)ViewData["Printing"] == true)
+{
+    Layout = "_LayoutNoNavigation";
+}
+
+<section class="invoice" style="border: 1px solid">
+    <div class="row logo-info" style="display: flex; align-items: center; height:101px">
+        <div class="col-sm-6 invoice-col" style="flex: 1; text-align: left; padding-top:1px;padding-left:40px">
+            @if (!String.IsNullOrWhiteSpace(Model.Company.Logo))
+            {
+                <img src="@($"/upload/{Model.Company.Logo}")" height="100" width="180" />
+            }
+        </div>
+        <div class="col-sm-6 invoice-col" style="flex: 1; text-align: center;">
+            <h2 class="page-header" style="margin: 0;">
+                <br><br>
+                PRODUCT BROCHURE
+               @*  <small class="pull-right"><b>Print at:</b> @DateTime.Now.ToShortDateString()</small> *@
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <h3>@Model.Header.Name</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            @if (!String.IsNullOrWhiteSpace(Model.Header.Picture))
+            {
+                <img src="@($"/upload/{Model.Header.Picture}")" height="100" width="200" />
+            }
+        </div>
+    </div>
+   <div class="row" style="padding-left:5px;padding-right:5px;">
+        <div class="col-xs-12">
+            <h5><b>Product Info</b></h5>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td><b>Product Name:</b></td>
+                        <td>@Model.Header.Name</td>
+                    </tr>
+                    <tr>
+                        <td><b>Internal Code/HSN No:</b></td>
+                        <td>@Model.Header.InternalCode</td>
+                    </tr>
+                    <tr>
+                        <td><b>Barcode:</b></td>
+                        <td>@Model.Header.Barcode</td>
+                    </tr>
+                    <tr>
+                        <td><b>Uom:</b></td>
+                        <td>@Model.Header.UomName</td>
+                    </tr>
+                    <tr>
+                        <td><b>Description:</b></td>
+                        <td>@Model.Header.Description</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" style="padding-left:5px;padding-right:5px;">
+        <div class="col-xs-6">
+            <div class="row" >
+                <div class="col-xs-12">
+                    <h5><b>Product Variant</b></h5>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td><b>Size:</b></td>
+                                <td>@Model.Header.SizeName</td>
+                            </tr>
+                            <tr>
+                                <td><b>Colour:</b></td>
+                                <td>@Model.Header.ColourName</td>
+                            </tr>
+                            <tr>
+                                <td><b>Flavour:</b></td>
+                                <td>@Model.Header.FlavourName</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row" style="padding-left:5px;">
+                <div class="col-xs-12">
+                    <h5><b>Product Retail</b></h5>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td><b>Currency:</b></td>
+                                <td>@Model.Header.CurrencyName</td>
+                            </tr>
+                            <tr>
+                                <td><b>Sales Price:</b></td>
+                                <td>@Model.Header.SalesPrice</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <h5><b>Product Purchase</b></h5>
+            <small>Please contact us using below information for purchase and procurement.</small>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td><b>Company Name:</b></td>
+                        <td>@Model.Company.TenantName</td>
+                    </tr>
+                    <tr>
+                        <td><b>Street Address:</b></td>
+                        <td>@Model.Company.Street</td>
+                    </tr>
+                    <tr>
+                        <td><b>City:</b></td>
+                        <td>@Model.Company.City</td>
+                    </tr>
+                    <tr>
+                        <td><b>State:</b></td>
+                        <td>@Model.Company.StateName</td>
+                    </tr>
+                    <tr>
+                        <td><b>ZipCode:</b></td>
+                        <td>@Model.Company.ZipCode</td>
+                    </tr>
+                    <tr>
+                        <td><b>Phone:</b></td>
+                        <td>@Model.Company.Phone</td>
+                    </tr>
+                    <tr>
+                        <td><b>Email:</b></td>
+                        <td>@Model.Company.Email</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+    <hr>
+</section>

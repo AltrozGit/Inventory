@@ -1,0 +1,232 @@
+﻿@using Indotalent.Web.Modules.Material.Issue
+@model Indotalent.Material.IssuePrintData
+
+
+@if ((bool?)ViewData["Printing"] == true)
+{
+    Layout = "_LayoutNoNavigation";
+}
+
+<section class="invoice" style="border: 1px solid">
+
+    <div class="row logo-info" style="display: flex; align-items: center; height:101px">
+        <div class="col-xs-6 invoice-col" style="flex: 1; text-align: right; padding-top:1px;padding-left:100px">
+            @if (!String.IsNullOrWhiteSpace(Model.Company.Logo))
+            {
+                <img src="@($"/upload/{Model.Company.Logo}")" height="100" width="180" />
+
+            }
+        </div>
+        <small class="pull-right" style="padding-right:20px"><b>Print at:</b> @DateTime.Now.ToShortDateString()</small>
+    </div>
+
+    <div class="row" style="padding-left:5px;padding-right:5px; ">
+        <div class="col-xs-12">
+            <table class="table table-bordered " style="border: 1px solid ">
+                <thead>
+                    <tr class="text-center">
+                        <th class="text-center">
+                            <strong>
+                              <u>
+                                  @Model.Company.TenantName
+                              </u>
+                            </strong>
+                        </th>
+                       
+                    </tr>
+
+                    <tr class="text-center">
+                        <td class="text-center" style="font-size=10px">
+                                    @Model.Company.Street ,@Model.Company.City 
+                                    @Model.Company.StateName ,@Model.Company.ZipCode<br>
+                                    <b> Phone:</b> @Model.Company.Phone<br>
+                                    <b>Email:</b> @Model.Company.Email<br>
+                              
+                            
+                        </td>
+
+                    </tr>
+
+                    <tr class="text-center">
+                        <td class="text-center" style="font-size=10px">
+                            
+                                <h5 class=" text-center">
+                                    @* MATERIAL ISSUE (GR INBOUND) *@
+                                <b>DELIVERY CHALLAN </b>
+                                    
+                                </h5>
+                            
+                        </td>
+
+                    </tr>
+                    
+                </thead>
+
+                <table class="table table-bordered">
+                    <tr class="">
+                        <td><span><b>Challan No:- </b>@Model.Header.Number &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <b>Issue Date:- </b>@Model.Header.IssueDate.Value.ToShortDateString()</span></td>
+                        <td><b>GST No:- </b>@Model.Company.GSTNumber </td>
+
+
+                    </tr>
+                </table>
+                
+            </table>
+            <table class="table table-bordered">
+                <tr class="text-center">
+                    <td class="text-center">
+
+                        <b>Material Details </b>
+
+                    </td>
+
+
+                </tr>
+            </table>
+
+            <table class="table table-bordered" style="border: 1px solid black">
+                <thead>
+                    <tr>
+                        <th>Sr.No.</th>
+                       
+                        <th>Material Description</th>
+
+                        <th>QtyRequest</th>
+                        <th>QtyIssue</th>
+                        <th>Purchase Price</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int SN = 1;
+                    }
+                    @foreach (var d in Model.Details)
+                    {
+                        <tr>
+                            <td><b>@SN</b></td>
+                            <td><b>@d.ProductName</b></td>
+
+                            <td>@(d.QtyRequest.ToStringDefault())</td>
+
+                            <td>@(d.QtyIssue.ToStringDefault())</td>
+
+                            <td>@(d.PurchasePrice.ToStringDefault())</td>
+
+                            
+
+                            <td>@(d.SubTotal.ToStringDefault())</td>
+                            
+                        </tr>
+                        SN++;
+                    }
+                </tbody>
+            </table>
+
+            <table class="table table-bordered" style="border: 1px solid black">
+                
+                <tr>
+                    <th style="width:50%">Total QtyIssue:</th>
+                    <td style ="width:50%">@Model.Header.TotalQtyIssue</td>
+                </tr>
+                <tr>
+                    <th style="width:50%">Total Price:</th>
+                    <td style="width:50%">@Model.Header.Total</td>
+                </tr>
+                <tr>
+                    <th style="width:50%">Total Price in Words (INR):</th>
+                    <td style="width:50%">
+                        @Html.Raw(NumberToWordsConverter.ConvertToWords(Model.Header.Total.HasValue ? (decimal)Model.Header.Total.Value : 0))
+                    </td>
+
+                </tr>
+            
+            </table>
+            
+        </div>
+   </div>
+
+   
+  
+    <!-- info row -->
+    <!-- info row -->
+    <div class="row invoice-info">
+       
+        
+
+
+        <!-- /.col -->
+        
+        <!-- /.col -->
+    </div>
+    @* <!-- Table row -->
+    <div class="row" style="padding-left:5px;padding-right:5px;">
+        <div class="col-xs-12 table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Sr.no</th>
+                        <th>Material Description</th>
+                       
+                        <th>QtyRequest</th>
+                        <th>QtyIssue</th>
+
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var d in Model.Details)
+                    {
+                        <tr>
+                            <td><b>@d.ProductName</b></td>
+
+                            <td>@(d.QtyRequest.ToStringDefault())</td>
+
+                            <td>@(d.QtyIssue.ToStringDefault())</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.col -->
+    </div>
+    <br />
+    <br /> *@
+
+
+    
+    <div class="row" style="padding-left:5px;padding-right:5px;">
+        <div class="col-xs-12">
+            <table class="table table-bordered" style="border: 1px solid">
+                <thead>
+                    <tr>
+                        <th class="text-center">Requested By</th>
+                        <th class="text-center">Issued By (Inbound Manager)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </td>
+                        <td>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+  
+</section>

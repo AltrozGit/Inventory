@@ -1,0 +1,221 @@
+﻿@model Indotalent.Projects.QuotationPrintData
+
+@if ((bool?)ViewData["Printing"] == true)
+{
+    Layout = "_LayoutNoNavigation";
+}
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 0px solid;
+        padding: 5px;
+    }
+
+    .no-border {
+        border: none;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .monospace {
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .no-break {
+        page-break-inside: avoid;
+    }
+</style>
+
+<section class="invoice" style="border: 1px solid">
+    <div class="row logo-info" style="display: flex; align-items: center; height:101px">
+        <div class="col-sm-6 invoice-col" style="flex: 1; text-align: left; padding-top:1px;padding-left:40px">
+            @if (!String.IsNullOrWhiteSpace(Model.Company.Logo))
+            {
+                <img src="@($"/upload/{Model.Company.Logo}")" height="100" width="180" />
+            }
+        </div>
+        <div class="col-sm-6 invoice-col" style="flex: 1; text-align: center;">
+            <h2 class="page-header" style="margin: 0;">
+                <br><br>
+                QUOTATION
+            </h2>
+        </div>
+    </div>
+
+    <table>
+        <tr>
+            <td class="col-xs-6 invoice-col" style="border-right: 1px solid #000;border-top: 1px solid #000;border-bottom: 1px solid #000;">
+                <b>From</b>
+                <address>
+                    <strong>@Model.Company.TenantName</strong><br>
+                    @Model.Company.Street<br>
+                    @Model.Company.City @Model.Company.StateName @Model.Company.ZipCode<br>
+                    <b>GST:</b> @Model.Company.GSTNumber<br>
+                    <b>Phone:</b> @Model.Company.Phone<br>
+                    <b>Email:</b> @Model.Company.Email
+                </address>
+            </td>
+            <td class="col-xs-6 invoice-col" style="border-top: 1px solid #000;border-bottom: 1px solid #000;">
+                <b>To</b>
+                <address>
+                    <strong>@Model.Customer.Name</strong><br>
+                    @Model.Customer.Street<br>
+                    @Model.Customer.City @Model.Customer.StateName @Model.Customer.ZipCode<br>
+                    <b>GST:</b> @Model.Customer.GSTNumber<br>
+                    <b>Phone:</b> @Model.Customer.Phone<br>
+                    <b>Email:</b> @Model.Customer.Email
+                </address>
+            </td>
+        </tr>
+     @*    <tr>
+          
+            <td class="col-xs-6 invoice-col" style="border-bottom: 1px solid #000;">
+                <b>Quatation Order Date:</b> @Model.Header.QuotationDate.Value.ToShortDateString()<br>
+                <b>Amount Order:</b> @Model.Company.Currency @Model.Header.Total.Value.ToString("#,##0.00")<br>
+                <b>Quatation Order Number:</b> @Model.Header.Number<br>
+            </td>
+        </tr> *@
+    </table>
+
+   <div class="row order-info">
+    <div class="col-sm-4 invoice-col" style="border-bottom: 1px solid #000;">
+        <b>&nbsp;&nbsp;&nbsp;&nbsp;Quotation Order Date:</b><br>
+        &nbsp;&nbsp;&nbsp;&nbsp; @Model.Header.QuotationDate.Value.ToShortDateString()
+    </div>
+    <div class="col-sm-4 invoice-col" style="border-bottom: 1px solid #000;">
+        <b>Amount Order:</b><br>
+        @Model.Company.Currency @Model.Header.Total.Value.ToString("#,##0.00")
+    </div>
+       <div class="col-sm-4 invoice-col" style="border-bottom: 1px solid #000;">
+        <b>Quotation Order Number:</b><br>
+            @Model.Header.Number
+    </div>
+</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2">SN</th>
+                <th rowspan="2">Item</th>
+                <th rowspan="2">HSN</th>
+                <th rowspan="2">Price</th>
+                <th rowspan="2"> Qty</th>
+                <th rowspan="2">Disc.</th>
+                @if (Model.Details.Any(d => d.IGST > 0))
+                {
+                    <th colspan="2" class="text-center">IGST</th>
+                }
+                else
+                {
+                    <th colspan="2" class="text-center">CGST</th>
+                    <th colspan="2" class="text-center">SGST</th>
+                }
+                <th rowspan="2">Total</th>
+            </tr>
+            <tr>
+                @if (Model.Details.Any(d => d.IGST > 0))
+                {
+                    <th class="text-center">%</th>
+                    <th class="text-center">Amt</th>
+                }
+                else
+                {
+                    <th class="text-center">%</th>
+                    <th class="text-center">Amt</th>
+                    <th class="text-center">%</th>
+                    <th class="text-center">Amt</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int SN = 1;
+            }
+            @foreach (var d in Model.Details)
+            {
+                <tr>
+                    <td><b>@SN</b></td>
+                    <td>@d.ProductName</td>
+                    <td>@(d.InternalCode)</td>
+                    <td class="monospace">@d.Price.ToStringDefault("#,##0.00")</td>
+                    <td class="monospace">@d.Qty.ToString()</td>
+                    <td class="monospace">@d.Discount.ToStringDefault("#,##0.00")</td>
+
+                    @if (d.IGST > 0)
+                    {
+                        <td class="monospace">@d.IGST.ToStringDefault("#,##0.00")</td>
+                        <td class="monospace">@d.IGSTAmount.ToStringDefault("#,##0.00")</td>
+                    }
+                    else
+                    {
+                        <td class="monospace">@d.CGST.ToStringDefault("#,##0.00")</td>
+                        <td class="monospace">@d.CGSTAmount.ToStringDefault("#,##0.00")</td>
+                        <td class="monospace">@d.SGST.ToStringDefault("#,##0.00")</td>
+                        <td class="monospace">@d.SGSTAmount.ToStringDefault("#,##0.00")</td>
+                    }
+                    <td class="monospace">@((d.BeforeTax + d.TaxAmount).ToStringDefault("#,##0.00"))</td>
+                </tr>
+                SN++;
+            }
+        </tbody>
+    </table>
+
+    <div class="row no-break">
+        <div class="col-xs-6">
+            <p class="lead"> &nbsp;&nbsp;&nbsp;&nbsp;<b>Summary, in currency</b> @Model.Company.Currency</p>
+            <div class="table-responsive">
+                <table class="table">
+                    @*   <tr>
+                    <th style="width:50%">Subtotal:</th>
+                    <td>@Model.Header.SubTotal.Value.ToString("#,##0.00")</td>
+                    </tr> *@
+                    <tr>
+                        <th>Subtotal:</th>
+                        <td>@Model.Header.BeforeTax.Value.ToString("#,##0.00")</td>
+                    </tr>
+
+                    <tr>
+                        <th>Discount:</th>
+                        <td>@Model.Header.Discount.Value.ToString("#,##0.00")</td>
+                    </tr>
+
+                    <tr>
+                        <th>GST Tax Amount:</th>
+                        <td>@Model.Header.TaxAmount.Value.ToString("#,##0.00")</td>
+                    </tr>
+                    <tr>
+                        <th>Other Charges:</th>
+                        <td>@Model.Header.OtherCharge.Value.ToString("#,##0.00")</td>
+                    </tr>
+                    @*  <tr>
+                    <th>Before Total TDS/TCS:</th>
+                    <td>@Model.Header.Total.Value.ToString("#,##0.00")</td>
+                    </tr> *@
+                    <tr>
+                        <th>Total:</th>
+                        <td>@Model.Header.Total.Value.ToString("#,##0.00")</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="col-xs-6" style="padding:25px">
+            <br><br><br><br>
+            <div class="col-xs-6">
+                <div style="width: 200%; height: 70%;  border: 1px solid #000;"><br><br><br><br><br><br><br><br></div>
+                <div style="width: 200%; height: 30%;text-align:center;border-right: 1px solid #000;border-left: 1px solid #000;border-bottom: 1px solid #000;"> <b>Authorized signatory</b></div>
+            </div>
+        </div>
+    </div>
+</section>

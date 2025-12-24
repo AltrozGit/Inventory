@@ -1,0 +1,165 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <AssemblyName>Indotalent.Web</AssemblyName>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <SerenitySrc>..\..\Serenity\src\</SerenitySrc>
+    <DotNetSergenExe>$(SerenitySrc)Serenity.Net.CodeGenerator\bin\sergen.exe</DotNetSergenExe>
+    <DotNetSergen>dotnet sergen</DotNetSergen>
+    <DotNetSergen Condition="Exists('$(DotNetSergenExe)')">$(DotNetSergenExe)</DotNetSergen>
+    <CommonSrc>..\..\common-features\src\</CommonSrc>
+    <ProSrc>..\..\pro-features\src\</ProSrc>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\**\*.sql" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
+    <Compile Remove="App_Data\**" />
+    <Compile Remove="Modules\Proje\**" />
+    <Content Remove="App_Data\**" />
+    <Content Remove="Modules\Proje\**" />
+    <EmbeddedResource Remove="App_Data\**" />
+    <EmbeddedResource Remove="Modules\Proje\**" />
+    <None Remove="App_Data\**" />
+    <None Remove="Modules\Proje\**" />
+    <TypeScriptCompile Remove="App_Data\**" />
+    <TypeScriptCompile Remove="Modules\Proje\**" />
+    <None Remove="Modules\Membership\Account\ForgotPassword\JazzForgotPasswordPanel.ts" />
+    <None Remove="Modules\Membership\Account\JazzLoginPanel.ts" />
+    <None Remove="Modules\Membership\Account\SignUp\JazzSignUpPanel.ts" />
+    <TypeScriptCompile Remove="Modules\DialogUtils.ts" />
+    <TypeScriptCompile Remove="Modules\Purchase\VendorContact\VendorContactEditor.ts" />
+    <TypeScriptCompile Remove="Modules\Sales\CustomerContact\CustomerContactEditor.ts" />
+    <TypeScriptCompile Remove="Modules\Sales\InvoiceDetail\InvoiceDetailEditor.ts" />
+    <TypeScriptCompile Remove="Modules\Sales\InvoicePayment\InvoicePaymentEditor.ts" />
+    <TypeScriptCompile Remove="Modules\Sales\Invoice\InvoiceEditor.ts" />
+    <None Include="Modules\Inventory\Stock\StockIndex.cshtml" />
+    <None Include="Modules\Purchase\PurchaseReceiptDetail\PurchaseReceiptDetailIndex.cshtml" />
+    <None Include="wwwroot\assets\fonts\datta\fonts\pct.svg" />
+    <None Include="wwwroot\assets\fonts\feather\fonts\feather.svg" />
+    <None Include="wwwroot\assets\plugins\jquery-scrollbar\js\jquery.scrollbar.min.js" />
+    <None Include="wwwroot\assets\plugins\jquery-ui\js\jquery-ui.js" />
+    <None Include="wwwroot\assets\plugins\jquery-validation\js\jquery.validate.min.js" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\alerts.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\background-variant.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\border-radius.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\buttons.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\center-block.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\clearfix.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\forms.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\gradients.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\grid-framework.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\grid.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\hide-text.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\image.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\labels.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\list-group.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\nav-divider.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\nav-vertical-align.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\opacity.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\pagination.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\panels.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\progress-bar.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\reset-filter.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\resize.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\responsive-visibility.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\size.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\tab-focus.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\table-row.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\text-emphasis.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\text-overflow.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\mixins\vendor-prefixes.less" />
+    <None Include="wwwroot\Content\serenity\bootstrap\variables.less" />
+    <None Update="wwwroot\**\*">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+    <None Update="Modules\**\*.Template.html;Modules\**\*.ts.html">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.CloudWatchLogs" Version="3.7.400" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.1.0" />
+    <PackageReference Include="EPPlus" Version="4.5.3.2" />
+    <PackageReference Include="FastMember" Version="1.5.0" />
+    <PackageReference Include="FluentMigrator.Runner" Version="3.2.9" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.4.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Node.js" Version="5.3.0" />
+    <PackageReference Include="Npm" Version="3.5.2" />
+    <PackageReference Include="NReco.PdfGenerator" Version="1.2.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Serenity.Assets" Version="5.0.44" />
+    <PackageReference Include="Serenity.Net.Web" Version="5.0.51" />
+    <PackageReference Include="Serenity.Scripts" Version="5.0.51" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Serenity.Extensions" Version="5.0.49.1" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+    <!--<if:ThemeSamples>-->
+    <!--</if:ThemeSamples>-->
+    <!--<if:Northwind>-->
+    <!--</if:Northwind>-->
+    <!--<if:BasicSamples>-->
+    <!--</if:BasicSamples>-->
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="wkhtmltopdf.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(SolutionDir)Serenity\build\submodule.targets" Condition="Exists('$(SolutionDir)Serenity\build\submodule.targets')" />
+  <Target Name="CreateInputsOutputs" BeforeTargets="BeforeBuild">
+    <CreateItem Include="Modules\**\*.ts;Imports\**\*.ts;tsconfig.json">
+      <Output TaskParameter="Include" ItemName="CompileTSCInputs" />
+    </CreateItem>
+    <CreateItem Include="wwwroot\Content\site\**\*.less">
+      <Output TaskParameter="Include" ItemName="CompileSiteLessInputs" />
+    </CreateItem>
+    <CreateItem Include="wwwroot\Content\serenity\**\*.less">
+      <Output TaskParameter="Include" ItemName="CompileSerenityLessInputs" />
+    </CreateItem>
+  </Target>
+  <Target Name="NpmInstall" BeforeTargets="BeforeBuild" Condition="!Exists('node_modules\@types\jquery\index.d.ts')">
+    <Message Text="Installing NPM packages..." Importance="high"></Message>
+    <Exec Command="npm install" />
+  </Target>
+  <Target Name="TransformMvcClientTypes" BeforeTargets="BeforeBuild">
+    <Exec Command="dotnet tool restore" ContinueOnError="true" />
+    <Exec Command="$(DotNetSergen) restore" ContinueOnError="true" />
+    <Exec Command="$(DotNetSergen) mvct" ContinueOnError="true" />
+  </Target>
+  <Target Name="CompileSiteLess" AfterTargets="AfterBuild" Inputs="@(CompileSiteLessInputs)" Outputs="wwwroot\Content\site\site.css">
+    <Message Text="Compiling site.less..." Importance="high"></Message>
+    <Exec Command="node_modules/.bin/lessc ./wwwroot/Content/site/site.less ./wwwroot/Content/site/site.css" ContinueOnError="true" />
+  </Target>
+  <Target Name="CompileSerenityLess" AfterTargets="AfterBuild" Inputs="@(CompileSerenityLessInputs)" Outputs="wwwroot\Content\serenity\serenity.css">
+    <Message Text="Compiling serenity.less..." Importance="high"></Message>
+    <Exec Command="node_modules/.bin/lessc ./wwwroot/Content/serenity/serenity.less ./wwwroot/Content/serenity/serenity.css" ContinueOnError="true" />
+  </Target>
+  <Target Name="TransformServerTypings" AfterTargets="AfterBuild">
+    <Exec Command="$(DotNetSergen) servertypings" ContinueOnError="true" />
+  </Target>
+  <Target Name="CompileTSC" AfterTargets="AfterBuild" Inputs="@(CompileTSCInputs)" Outputs="wwwroot\Scripts\site\Indotalent.Web.js">
+    <Message Text="Executing TypeScript compiler..." Importance="high"></Message>
+    <Exec Command="node &quot;$(TSJavaScriptFile.Replace('build\\..\tools\', 'tools\'))&quot; -p ./tsconfig.json" ContinueOnError="true" />
+  </Target>
+</Project>

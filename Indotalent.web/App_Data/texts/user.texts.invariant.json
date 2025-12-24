@@ -1,0 +1,7 @@
+{
+  "Forms.Membership.Login.FormTitle": "Welcome to Invoice Multitenant Platform",
+  "Forms.Membership.ResetPassword.EmailSubject": "Reset your SaaS Inventory Password",
+  "Forms.Membership.SignUp.ActivateEmailSubject": "Activate your SaaS Inventory Account",
+  "Forms.Membership.SignUp.FormTitle": "Sign up for Altroz Inventory",
+  "Navigation.SiteTitle": "Altroz Inventory"
+}

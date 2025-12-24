@@ -1,0 +1,167 @@
+﻿@model Indotalent.Purchase.PurchaseReceiptPrintData
+
+@if ((bool?)ViewData["Printing"] == true)
+{
+    Layout = "_LayoutNoNavigation";
+}
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 0px solid;
+        padding: 5px;
+    }
+
+    .no-border {
+        border: none;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .monospace {
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .no-break {
+        page-break-inside: avoid;
+    }
+</style>
+
+<section class="invoice" style="border: 1px solid">
+    <div class="row logo-info" style="display: flex; align-items: center; height: 101px">
+        <div class="col-xs-12 invoice-col" style="flex: 1; text-align: left; padding-top: 1px; padding-left: 40px">
+            @if (!String.IsNullOrWhiteSpace(Model.Company.Logo))
+            {
+                <img src="@($"/upload/{Model.Company.Logo}")" height="100" width="180" />
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="page-header text-center">
+                PURCHASE RECEIPT (GR INBOUND)
+                <small class="pull-right" style="padding-right: 5px"><b>Print at:</b> @DateTime.Now.ToShortDateString()</small>
+            </h2>
+        </div>
+    </div>
+    <br>
+
+    <div class="row bill-info" style="border: 1px solid">
+        <div class="col-xs-6 bill-col" style="border-right: 1px solid #000;">
+            <b>From</b>
+            <address>
+                <strong>@Model.Vendor.Name</strong><br>
+                @Model.Vendor.Street<br>
+                @Model.Vendor.City @Model.Vendor.StateName @Model.Vendor.ZipCode<br>
+                <b>GST:</b> @Model.Vendor.GSTNumber<br>
+                <b>Phone:</b> @Model.Vendor.Phone<br>
+                <b>Email:</b> @Model.Vendor.Email
+            </address>
+        </div>
+        <div class="col-xs-6 bill-col">
+            <b>To</b>
+            <address>
+                <strong>@Model.Company.TenantName</strong><br>
+                @Model.Company.Street<br>
+                @Model.Company.City @Model.Company.StateName @Model.Company.ZipCode<br>
+                <b>Phone:</b> @Model.Company.Phone<br>
+                <b>Email:</b> @Model.Company.Email<br>
+                <b>GST:</b> @Model.Company.GSTNumber
+            </address>
+        </div>
+    </div>
+   
+
+    <div class="row order-info" >
+        <div class="col-xs-3 billorder-col" style="border-right: 1px solid #000;">
+            <b>Receipt Number:</b><br>
+            @Model.Header.Number
+        </div>
+        <div class="col-xs-3 billorder-col" style="border-right: 1px solid #000;">
+            <b>Receipt Date:</b><br>
+            @Model.Header.ReceiptDate.Value.ToShortDateString()
+        </div>
+        <div class="col-xs-3 billorder-col" style="border-right: 1px solid #000;">
+            <b>Purchase Order:</b><br>
+            @Model.Header.PurchaseOrderNumber
+        </div>
+        <div class="col-xs-3 billorder-col">
+            <b>Total Qty Received:</b><br>
+            @Model.Header.TotalQtyReceive
+        </div>
+    </div>
+  
+            <table>
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Item</th>
+                        <th>Qty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int SN = 1;
+                    }
+                    @foreach (var d in Model.Details)
+                    {
+                        <tr>
+                    <td><b>@SN</b></td>
+                    <td>@d.ProductName</td>
+                            <td>@(d.QtyReceive.ToStringDefault())</td>
+                        </tr>
+                        SN++;
+                    }
+                </tbody>
+            </table>
+            <hr>
+     
+    <div class="row no-break" style="padding-left: 5px; padding-right: 5px;">
+        <div class="col-xs-6"></div>
+        <div class="col-xs-6">
+            <p class="lead"><b>Summary</b></p>
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th style="width: 50%">Total Qty Received:</th>
+                        <td>@Model.Header.TotalQtyReceive</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding-left: 5px; padding-right: 5px;">
+        <div class="col-xs-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">Received By</th>
+                        <th class="text-center">Approved By (Inbound Manager)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <br><br><br><br><br><br>
+                        </td>
+                        <td>
+                            <br><br><br><br><br><br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

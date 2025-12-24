@@ -1,0 +1,195 @@
+﻿@using Serenity.Data
+@using Indotalent.Administration
+@using Microsoft.Extensions.Options
+@inject Serenity.ITextLocalizer Localizer
+@inject Serenity.Abstractions.IUserRetrieveService UserRetriever
+@inject ISqlConnections SqlConnections
+@inject IOptions<DefaultOptions> DefaultOptions
+<!DOCTYPE html>
+@{
+    Func<string, HtmlString> json = x => new HtmlString(Serenity.JSON.Stringify(x));
+    var hideNav = (string)Context.Request.Query["hideNav"] == "1";
+    var logged = User?.Identity?.Name;
+    var themeCookie = Context.Request.Cookies["ThemePreference"];
+    var theme = !themeCookie.IsEmptyOrNull() ? themeCookie : "blue";
+    var darkSidebar = theme != null && theme.IndexOf("light") < 0;
+    var rtl = System.Globalization.CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
+    var user = User.GetUserDefinition<UserDefinition>(UserRetriever);
+    var userImage = VirtualPathUtility.ToAbsolute(Context,
+        (user == null || string.IsNullOrEmpty(user.UserImage)) ? "~/assets/images/bg-images/photo-placeholder.png" :
+        "~/upload/" + user.UserImage);    
+    var tenantName = "";
+    using (var connection = SqlConnections.NewFor<TenantRow>())
+    {
+        if (user != null)
+        {
+            var tenant = connection.ById<TenantRow>(user.TenantId);
+            tenantName = tenant.TenantName;            
+        } 
+        else
+        {
+            Context.Response.Redirect("/Account/Signout");
+        }
+    }
+    var defaultOptions = DefaultOptions.Value;
+}
+<!--[if IE 8]> <html lang="@System.Globalization.CultureInfo.CurrentUICulture.Name" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="@System.Globalization.CultureInfo.CurrentUICulture.Name" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="@System.Globalization.CultureInfo.CurrentUICulture.Name" class="no-js@(hideNav ? " no-navigation" : "")@Html.Raw(rtl ? " dir=\"rtl\"" : "")">
+<!--<![endif]-->
+<head>
+    <partial name="@MVC.Views.Shared._LayoutHead" />
+    @RenderSection("Head", false)
+    <title>@(ViewData["Title"]) - @Texts.Navigation.SiteTitle.ToString(Localizer)</title>
+</head>
+<body id="s-@(ViewData["PageId"])Page" class="@(ViewData["BodyClass"]) fixed sidebar-mini hold-transition skin-@theme @(darkSidebar ? "dark-sidebar" : "light-sidebar")@(hideNav ? " no-navigation" : " has-layout-event")@(rtl ? " rtl" : "")">
+<div id="PageBackground" style="display: none"></div>
+@if (hideNav)
+{
+    <script type="text/javascript">
+        $(function () {
+            @RenderSection("PageInitScript", false)
+        });
+    </script>
+    <div id="page-outer-nonav">
+        <div id="page-container" class="page-container-common">
+            @RenderBody()
+        </div>
+    </div>
+}
+else
+{
+    <div class="wrapper">
+        <header class="main-header">
+            <a href="~/" class="logo">
+                <span class="logo-mini">
+                    <div class="logo-bg">
+                        <i class="fa fa-chrome"></i>
+                    </div>
+                </span>
+                <span class="logo-lg">
+                    <div class="logo-bg">
+                        <i class="fa fa-chrome"></i>
+                    </div>
+                    <b>@defaultOptions.ApplicationName</b>
+                </span>
+            </a>
+            <nav class="navbar navbar-static-top" role="navigation">
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="@userImage" class="user-image" alt="User Image">
+                                <span class="hidden-xs">@User?.Identity?.Name</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="@userImage" class="img-circle" alt="User Image">
+
+                                    <p>
+                                        @(user != null ? user.DisplayName : "")
+                                    </p>
+                                </li>
+
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="~/Account/ChangePassword" class="btn btn-default btn-flat"><i class="fa fa-lock fa-fw"></i> @Texts.Forms.Membership.ChangePassword.FormTitle.ToString(Localizer)</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="~/Account/Signout" class="btn btn-default btn-flat"><i class="fa fa-sign-out fa-fw"></i> @Localizer.Get("Navigation.LogoutLink")</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-sliders"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <aside class="main-sidebar">
+            <section class="sidebar">
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" id="SidebarSearch" name="q" class="form-control" autocomplete="off">
+                        <span class="input-group-btn">
+                            <button type="button" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </form>
+                <ul class="sidebar-menu" id="SidebarMenu">
+                    <partial name="@MVC.Views.Shared.LeftNavigation" model="new Indotalent.Navigation.NavigationModel(Context)" />
+                </ul>
+            </section>
+        </aside>
+
+        <div class="content-wrapper">
+            @if (IsSectionDefined("ContentHeader"))
+            {
+                <section class="content-header">
+                    @RenderSection("ContentHeader")
+                </section>
+            }
+            <section class="content">
+                @RenderBody()
+            </section>
+        </div>
+
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                @defaultOptions.ApplicationName | Company: @tenantName
+            </div>
+            <strong>@defaultOptions.CopyrightWording</strong> @Texts.Site.Layout.FooterRights.ToString(Localizer)
+        </footer>
+
+        <aside class="control-sidebar control-sidebar-dark">
+            <div class="tab-content">
+                <div class="tab-pane active" id="control-sidebar-settings-tab">
+                    <form method="post">
+                        <h3 class="control-sidebar-heading">@Texts.Site.Layout.GeneralSettings.ToString(Localizer)</h3>
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">@Texts.Site.Layout.Language.ToString(Localizer)</label>
+                            <select id="LanguageSelect" class="form-control"></select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </aside>
+        <div class="control-sidebar-bg"></div>
+    </div>
+
+    <script type="text/javascript">
+        $().ready(function () {
+            new Indotalent.Common.SidebarSearch($('#SidebarSearch'), $('#SidebarMenu')).init();
+            new Indotalent.Common.LanguageSelection($('#LanguageSelect'), '@(System.Globalization.CultureInfo.CurrentUICulture.Name)');
+            @RenderSection("PageInitScript", false);
+
+            var doLayout = function () {
+                height = (this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height;
+                height -= $('header.main-header').outerHeight() || 0;
+                height -= $('section.content-header').outerHeight() || 0;
+                height -= $('footer.main-footer').outerHeight() || 0;
+                if (height < 200) height = 200;
+                $("section.content").css("min-height", (height) + "px");
+
+                $('body').triggerHandler('layout');
+            };
+
+            $(window).bind("load resize layout", doLayout);
+            doLayout();
+        });
+    </script>
+}
+</body>
+</html>

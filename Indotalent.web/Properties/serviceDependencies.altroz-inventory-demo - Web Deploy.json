@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/server-altroz/databases/database_altroz",
+      "type": "mssql.azure",
+      "connectionId": "Data:Default:ConnectionString"
+    }
+  }
+}

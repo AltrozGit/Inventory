@@ -1,0 +1,171 @@
+﻿@model Indotalent.Inventory.TransferOrderPrintData
+
+
+@if ((bool?)ViewData["Printing"] == true)
+{
+    Layout = "_LayoutNoNavigation";
+}
+
+<section class="invoice" style="border: 1px solid">
+   
+    <div class="row">
+        <div class="col-xs-12">
+            <h4 style="text-align:right;padding-right:5px;">
+                <small><b>Print at:</b> @DateTime.Now.ToShortDateString()</small>
+            </h4>
+            <h2 class="page-header text-center">
+                TRANSFER ORDER             
+            </h2>
+           
+        </div>
+    </div>
+    <!-- info row -->
+
+    <div row order-info" style="text-align:center">
+        <b> Transfer Details:</b>
+    </div>
+    <div class="row transfer-info" style="border: 1px solid">
+
+        <!-- /.col -->
+        <div class="col-xs-6 transfer-col" style="border-right: 1px solid #000;">
+            <b>&nbsp;&nbsp;&nbsp;&nbsp; From Warehouse</b>
+            <address>
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;@Model.Header.FromName</strong><br>
+
+                &nbsp;&nbsp;&nbsp;&nbsp; @Model.Header.FromStreet<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;@Model.Header.FromCity @Model.Header.FromState @Model.Header.FromZipCode<br>      
+                <b> &nbsp;&nbsp;&nbsp;&nbsp;Phone:</b> @Model.Header.FromPhone<br>
+                <b> &nbsp;&nbsp;&nbsp;&nbsp;Email:</b> @Model.Header.FromEmail
+            </address>
+        </div>
+
+        <!-- /.col -->
+        <div class="col-xs-6 transfer-col" style="border-right: 1px solid #000;">
+            <b> To Warehouse</b>
+            <address>
+                <strong>@Model.Header.ToName</strong><br>
+
+                @Model.Header.ToStreet<br>
+                @Model.Header.ToCity @Model.Header.ToState @Model.Header.ToZipCode<br>
+                <b> Phone:</b> @Model.Header.ToPhone<br>
+                <b>  Email: </b>@Model.Header.ToEmail<br>
+                
+            </address>
+
+        </div>
+
+
+
+        <!-- /.col -->
+    </div>
+    <br>
+    <div class="row order-info" style="border: 1px solid">
+
+
+        <!-- /.col -->
+        <div class="col-xs-4 billorder-col" style="border-right: 1px solid #000;">
+            <b>  &nbsp;&nbsp;&nbsp;&nbsp;Transfer Number:</b><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;@Model.Header.Number
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4 billorder-col" style="border-right: 1px solid #000;">
+            <b> Transfer Date:</b><br>
+            @Model.Header.TransferDate.Value.ToShortDateString()
+        </div>
+        <div class="col-xs-4 billorder-col" style="border-right: 1px solid #000;">
+            <b> Total Qty:</b><br>
+            @Model.Header.TotalQty
+        </div>
+       
+        <!-- /.col -->
+
+    </div>
+
+    <br>
+
+    <!-- /.row -->
+    <!-- Table row -->
+    <div class="row" style="padding-left:5px;padding-right:5px;">
+        <div class="col-xs-12 table-responsive">
+            <table class="table table-striped" style="border: 1px solid;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid">SN</th>
+                        <th style="border: 1px solid">Product Name</th>
+                        <th style="border: 1px solid">Qty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int SN = 1;
+                    }
+                    @foreach (var d in Model.Details)
+                    {
+                        <tr>
+
+                            <td style="border: 1px solid">@SN</td>
+                            <td style="border: 1px solid"><b>@d.ProductName</b></td>
+                            <td style="border: 1px solid">@(d.Qty.ToStringDefault())</td>
+
+                        </tr>
+                        SN++;
+                    }
+                </tbody>
+            </table>
+            <hr>
+        </div>
+        <!-- /.col -->
+    </div>
+
+
+    <div class="row" style="padding-left:5px;padding-right:5px;">
+        <div class="col-xs-6">
+
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-6">
+            <p class="lead"><b>Summary</b></p>
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th style="width:50%">Total Qty:</th>
+                        <td>@Model.Header.TotalQty</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-left:5px;padding-right:5px;">
+        <div class="col-xs-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">Goods Issue By (Source Warehouse)</th>
+                        <th class="text-center">Goods Receive By (Destination Warehouse)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </td>
+                        <td>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+   
+</section>
